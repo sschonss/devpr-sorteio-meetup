@@ -23,14 +23,6 @@ class LittleTiger {
         }
     }
 
-    public function drawWinner() {
-        if (empty($this->participants)) {
-            throw new Exception("No participants to draw from.");
-        }
-        $index = array_rand($this->participants);
-        return $this->participants[$index];
-    }
-
     public function drawWinnerInfo() {
         if (empty($this->participants)) {
             throw new Exception("No participants to draw from.");
@@ -40,13 +32,9 @@ class LittleTiger {
         $winnerIndex = array_rand($lines);
         $row = str_getcsv($lines[$winnerIndex], ',', '"', '\\');
         return [
-            'Nome' => $row[2] ?? '',
-            'Email' => $row[3] ?? '',
-            'Telefone' => $row[4] ?? ''
+            'Nome' => isset($row[2]) ? mb_strtoupper($row[2]) : '',
+            'Email' => isset($row[3]) ? $row[3] : '',
+            'Telefone' => isset($row[4]) ? $row[4] : ''
         ];
-    }
-
-    public function getParticipants() {
-        return $this->participants;
     }
 }

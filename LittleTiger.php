@@ -31,6 +31,21 @@ class LittleTiger {
         return $this->participants[$index];
     }
 
+    public function drawWinnerInfo() {
+        if (empty($this->participants)) {
+            throw new Exception("No participants to draw from.");
+        }
+        $lines = @file('data.csv', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        array_shift($lines);
+        $winnerIndex = array_rand($lines);
+        $row = str_getcsv($lines[$winnerIndex], ',', '"', '\\');
+        return [
+            'Nome' => $row[2] ?? '',
+            'Email' => $row[3] ?? '',
+            'Telefone' => $row[4] ?? ''
+        ];
+    }
+
     public function getParticipants() {
         return $this->participants;
     }
